@@ -1,6 +1,10 @@
 # This is a basic workflow to help you get started with Actions
 
 name: gh_pages-sitemap-ping
+description: "Pinging a sitemap to bing/google search engine"
+branding:
+  icon: "arrow-up-right"
+  color: "orange"
 
 on:
   page_build:
