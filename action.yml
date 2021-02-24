@@ -19,6 +19,7 @@ jobs:
       - name: ping
         env:
           MAP_URL: "NULL" # set custom URL if you use it
+          SITEMAP_FILE: "sitemap.xml"
         run: |
           if [ "NULL" = "${MAP_URL}" ]; then
             if [ -s CNAME ]; then
@@ -26,7 +27,7 @@ jobs:
             else
               MAP_URL="$(echo ${{ github.repository }} | sed -e "s/^.*${{ github.github.repository_owner }}\///")"
             fi
-              MAP_URL="https://${MAP_URL}/sitemap.xml"
+              MAP_URL="https://${MAP_URL}/${SITEMAP_FILE}"
           fi
 
           curl -v "http://www.google.com/ping?sitemap=${MAP_URL}" &
