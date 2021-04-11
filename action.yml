@@ -18,19 +18,22 @@ jobs:
 
       - name: ping
         env:
-          MAP_URL: "NULL" # set custom URL if you use it
+          CUSTOM_URL: "${{ secrets.SITEMAP_URL }}" # set custom URL if you use it
           SITEMAP_FILE: "sitemap.xml"
         run: |
-          if [ "NULL" = "${MAP_URL}" ]; then
-            if [ -s CNAME ]; then
+          if [ -z "${CUSTOM_URL}" ]; then
+            if [ -s "CNAME" ]; then
               MAP_URL="$(cat CNAME)"
             else
               MAP_URL="$(echo ${{ github.repository }} | sed -e "s/^.*${{ github.github.repository_owner }}\///")"
             fi
               MAP_URL="https://${MAP_URL}/${SITEMAP_FILE}"
+          else
+            MAP_URL="${CUSTOM_URL}"
           fi
 
-          curl -v "http://www.google.com/ping?sitemap=${MAP_URL}" &
-          curl -v "http://www.bing.com/ping?sitemap=${MAP_URL}" &
+          
+          curl -v "http://www.google.com/ping?sitemap=${MAP_URL}" &> /dev/null &
+          curl -v "http://www.bing.com/ping?sitemap=${MAP_URL}" &> /dev/null  &
           wait
           printf "\n\nDone\n"
