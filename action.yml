@@ -1,4 +1,3 @@
-
 name: gh_pages-sitemap-ping
 description: "Pinging a sitemap to bing/google search engine"
 branding:
@@ -9,7 +8,7 @@ on:
   page_build:
   workflow_dispatch:
   
-jobs:
+runs:
   gh_pages-sitemap-ping:
     runs-on: ubuntu-latest
     steps:
